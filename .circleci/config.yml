@@ -1,0 +1,35 @@
+version: 2.1
+
+jobs:
+  lint-dockerfile:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: Install and Run Hadolint
+          command: |
+            sudo apt-get update
+            sudo apt-get -y install hadolint
+            hadolint Dockerfile
+
+  build-app-karsajobs-ui:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: Login to GitHub Container Registry
+          command: docker login ghcr.io -u Jastiadirizal -p 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
+      - run:
+          name: Build and Push Docker Image to gihtub packages
+          command: |
+            docker build -t ghcr.io/jastiadirizal/karsajobs-ui:latest .
+            docker push ghcr.io/jastiadirizal/karsajobs-ui:latest
+
+workflows:
+  version: 2
+  karsajobs-ui-ci:
+    jobs:
+      - lint-dockerfile
+      - build-app-karsajobs-ui
