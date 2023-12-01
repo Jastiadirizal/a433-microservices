@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3 # Menggunakan API version networking.istio.io/v1alpha3 untuk VirtualService
+kind: VirtualService # Jenis objek yang akan dibuat adalah VirtualService
+
+metadata:
+  name: istio-vs # Nama VirtualService yang akan diciptakan
+
+spec:
+  hosts:
+  - "*" # Menentukan host yang akan di-matching oleh VirtualService. "*" berarti match semua host.
+  gateways:
+  - istio-gateway # Menentukan gateway yang akan digunakan oleh VirtualService.
+  http:
+  - match:
+      - uri:
+          exact: /order # Mengatur aturan pencocokan untuk URI yang tepat "/order".
+      - uri:
+          exact: /shipping # Mengatur aturan pencocokan untuk URI yang tepat "/shipping".
+    route:
+      - destination:
+          host: order-service # Menentukan destinasi layanan untuk rute pertama.
+          port:
+            number: 3000 # Menentukan nomor port untuk destinasi layanan.
+      - destination:
+          host: shipping-service # Menentukan destinasi layanan untuk rute kedua.
+          port:
+            number: 3001 # Menentukan nomor port untuk destinasi layanan.

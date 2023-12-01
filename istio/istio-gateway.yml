@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3 # Menggunakan API version networking.istio.io/v1alpha3 untuk Gateway
+kind: Gateway # Jenis objek yang akan dibuat adalah Gateway
+
+metadata:
+  name: istio-gateway # Nama Gateway yang akan diciptakan
+
+spec:
+  selector:
+    istio: ingressgateway # Menggunakan kontroler default Istio
+  servers:
+  - port:
+      number: 80 # Nomor port untuk Gateway
+      name: http # Nama port
+      protocol: HTTP # Protokol yang digunakan
+    hosts:
+    - "*" # Daftar host yang harus di-matching oleh Gateway. "*" berarti match semua host
