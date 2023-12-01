@@ -1,0 +1,23 @@
+apiVersion: apps/v1 # Menggunakan API version apps/v1 untuk Deployment
+kind: Deployment # Jenis objek yang akan dibuat adalah Deployment
+
+metadata:
+  name: order-deployment # Nama Deployment yang akan diciptakan
+  labels:
+    app: order # Label aplikasi untuk identifikasi objek
+    version: v1 # Label versi aplikasi
+
+spec:
+  selector:
+    matchLabels:
+      app: order # Seleksi pod berdasarkan label aplikasi
+  template:
+    metadata:
+      labels:
+        app: order # Label yang diberikan pada pod yang akan dibuat
+    spec:
+      containers:
+        - name: order-container # Nama dari container yang akan dibuat
+          image: ghcr.io/jastiadirizal/order-service:latest # Image yang akan digunakan oleh container
+          ports:
+            - containerPort: 3000 # Port yang akan di-expose di dalam container

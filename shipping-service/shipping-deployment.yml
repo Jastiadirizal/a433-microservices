@@ -1,0 +1,23 @@
+apiVersion: apps/v1 # Menggunakan API version apps/v1 untuk Deployment
+kind: Deployment # Jenis objek yang akan dibuat adalah Deployment
+
+metadata:
+  name: shipping-deployment # Nama Deployment yang akan diciptakan
+  labels:
+    app: shipping # Label aplikasi untuk identifikasi objek
+    version: v1 # Label versi aplikasi
+
+spec:
+  selector:
+    matchLabels:
+      app: shipping # Seleksi pod berdasarkan label aplikasi
+  template:
+    metadata:
+      labels:
+        app: shipping # Label pada pod yang akan dibuat oleh template ini
+    spec:
+      containers:
+        - name: shipping-container # Nama container yang akan dibuat
+          image: ghcr.io/jastiadirizal/shipping-service:latest # Image yang akan digunakan oleh container
+          ports:
+            - containerPort: 3001 # Port yang akan di-expose di dalam container

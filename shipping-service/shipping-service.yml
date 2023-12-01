@@ -1,0 +1,15 @@
+apiVersion: v1 # Menggunakan API version v1 untuk Service
+kind: Service # Jenis objek yang akan dibuat adalah Service
+
+metadata:
+  name: shipping-service # Nama Service yang akan diciptakan
+  labels:
+    app: shipping # Label aplikasi untuk identifikasi objek
+
+spec:
+  ports:
+    - port: 3001 # Port yang akan di-expose oleh Service
+      targetPort: 3001 # Port yang akan di-redirect ke dalam pod yang dipilih
+      name: http # Nama port
+  selector:
+    app: shipping-service # Selector untuk memilih pod yang akan di-expose oleh Service
